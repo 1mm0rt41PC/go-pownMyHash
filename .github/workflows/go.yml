@@ -47,14 +47,13 @@ jobs:
         name: go-pownMyHash_Unix64
         path: go-pownMyHash_Unix64.bin
         retention-days: 7
-        
-    # Auto-tag basé sur la version dans package.json ou version.json
+
     - name: Auto Tag
+      uses: butlerlogic/action-autotag@1.0.0
       id: autotag
-      uses: Klemensas/action-autotag@stable
       with:
         GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-        tag_prefix: "v"
+        dry_run: false
           
     # Créer une release uniquement si un tag est poussé
     - name: Create Release
