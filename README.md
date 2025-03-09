@@ -1,5 +1,7 @@
 # go-pownmyhash
 
+[![Go Build and Release](https://github.com/1mm0rt41PC/go-pownMyHash/actions/workflows/go.yml/badge.svg)](https://github.com/1mm0rt41PC/go-pownMyHash/actions/workflows/go.yml)
+[![Latest Release](https://img.shields.io/github/v/release/1mm0rt41PC/go-pownMyHash)](https://github.com/1mm0rt41PC/go-pownMyHash/releases/latest)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 A powerful cross-platform password cracking automation tool that leverages hashcat with smart dictionary management and adaptive attack strategies.
