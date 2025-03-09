@@ -44,3 +44,18 @@ jobs:
         name: go-pownMyHash_Unix64
         path: go-pownMyHash_Unix64.bin
         retention-days: 7
+        
+    # Créer une release uniquement si un tag est poussé
+    - name: Create Release
+      id: create_release
+      if: startsWith(github.ref, 'refs/tags/')
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          go-pownmyhash_Win64.exe
+          go-pownmyhash_Unix64.bin
+        draft: false
+        prerelease: false
+        generate_release_notes: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
