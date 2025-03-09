@@ -17,12 +17,7 @@ jobs:
     - uses: actions/checkout@v4
       with:
         fetch-depth: 0 # Nécessaire pour accéder à tous les tags
-      run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git tag -a "v${{ github.run_number }}" -m "Release v${{ github.run_number }}"
-        git push origin "v${{ github.run_number }}"
-          
+         
     - name: Set up Go
       uses: actions/setup-go@v4
       with:
@@ -52,6 +47,13 @@ jobs:
         name: go-pownMyHash_Unix64
         path: go-pownMyHash_Unix64.bin
         retention-days: 7
+
+    - name: Create tag
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git tag -a "v${{ github.run_number }}" -m "Release v${{ github.run_number }}"
+        git push origin "v${{ github.run_number }}"
 
     # Créer une release uniquement si un tag est poussé
     - name: Create Release
