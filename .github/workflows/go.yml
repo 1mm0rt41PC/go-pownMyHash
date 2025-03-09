@@ -15,11 +15,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-
+      with:
+        fetch-depth: 0 # Nécessaire pour accéder à tous les tags
+          
     - name: Set up Go
       uses: actions/setup-go@v4
       with:
         go-version: '1.24'
+        check-latest: true
 
     - name: Build for Windows
       run: |
@@ -45,15 +48,25 @@ jobs:
         path: go-pownMyHash_Unix64.bin
         retention-days: 7
         
+    # Auto-tag basé sur la version dans package.json ou version.json
+    - name: Auto Tag
+      id: autotag
+      uses: Klemensas/action-autotag@stable
+      with:
+        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        tag_prefix: "v"
+          
     # Créer une release uniquement si un tag est poussé
     - name: Create Release
       id: create_release
-      #if: startsWith(github.ref, 'refs/tags/')
+      if: steps.autotag.outputs.tagcreated == 'yes'
       uses: softprops/action-gh-release@v1
       with:
         files: |
           go-pownmyhash_Win64.exe
           go-pownmyhash_Unix64.bin
+        tag_name: ${{ steps.autotag.outputs.tagname }}
+        name: Release ${{ steps.autotag.outputs.tagname }}
         draft: false
         prerelease: false
         generate_release_notes: true
